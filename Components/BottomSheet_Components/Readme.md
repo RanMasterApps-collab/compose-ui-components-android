@@ -111,14 +111,14 @@ A modern Profile Bottom Sheet for displaying user profile information and profil
 ## Components Preview
 
 <p align="center">
-  <img src="./images/action_bottomsheet.png" width="220">
-  <img src="./images/share_bottomsheet.png" width="220">
-  <img src="./images/filter_bottomsheet.png" width="220">
+  <img src="./image/action_bottomsheet.png" width="220">
+  <img src="./image/share_bottomsheet.png" width="220">
+  <img src="./image/filter_bottomsheet.png" width="220">
 </p>
 
 <p align="center">
-  <img src="./images/payment_bottomsheet.png" width="220">
-  <img src="./images/profile_bottomsheet.png" width="220">
+  <img src="./image/payment_bottomsheet.png" width="220">
+  <img src="./image/profile_bottomsheet.png" width="220">
 </p>
 
 ---
