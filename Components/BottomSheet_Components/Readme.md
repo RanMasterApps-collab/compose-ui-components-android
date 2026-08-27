@@ -19,7 +19,7 @@ The UI illustration was designed in **Canva** and recreated using Jetpack Compos
 </p>
 
 **Source Code:**  
-[`ActionBottomSheet.kt`](./Action_BottomSheet.kt)
+[`ActionBottomSheet.kt`](./ActionBottomSheet.kt)
 
 ---
 
@@ -34,7 +34,7 @@ The UI illustration was designed in **Canva** and implemented using Jetpack Comp
 </p>
 
 **Source Code:**  
-[`ShareBottomSheet.kt`](./Share_BottomSheet.kt)
+[`ShareBottomSheet.kt`](./ShareBottomSheet.kt)
 
 ---
 
