@@ -13,7 +13,7 @@ These components are designed for Android applications and can be customized and
 A modern action Bottom Sheet with quick actions such as Edit, Duplicate, Delete, and Cancel.
 
 <p align="center">
-  <img src="./images/Action_bottomsheet.png" width="300">
+  <img src="./image/action_bottomsheet.png" width="300">
 </p>
 
 **Source Code:**  
@@ -26,7 +26,7 @@ A modern action Bottom Sheet with quick actions such as Edit, Duplicate, Delete,
 A modern and reusable Bottom Sheet for sharing content through different social and sharing options.
 
 <p align="center">
-  <img src="./images/Share_bottomsheet.png" width="300">
+  <img src="./image/share_bottomsheet.png" width="300">
 </p>
 
 **Source Code:**  
@@ -39,7 +39,7 @@ A modern and reusable Bottom Sheet for sharing content through different social 
 A clean and modern Filter Bottom Sheet for selecting and applying different filtering options.
 
 <p align="center">
-  <img src="./images/Filter_bottomsheet.png" width="300">
+  <img src="./image/filter_bottomsheet.png" width="300">
 </p>
 
 **Source Code:**  
@@ -52,7 +52,7 @@ A clean and modern Filter Bottom Sheet for selecting and applying different filt
 A modern Payment Bottom Sheet designed for displaying payment methods and payment-related actions.
 
 <p align="center">
-  <img src="./images/Payment_bottomsheet.png" width="300">
+  <img src="./image/payment_bottomsheet.png" width="300">
 </p>
 
 **Source Code:**  
@@ -65,7 +65,7 @@ A modern Payment Bottom Sheet designed for displaying payment methods and paymen
 A modern Profile Bottom Sheet for displaying user profile information and profile-related actions.
 
 <p align="center">
-  <img src="./images/Profile_bottomsheet.png" width="300">
+  <img src="./image/profile_bottomsheet.png" width="300">
 </p>
 
 **Source Code:**  
