@@ -1,8 +1,8 @@
 # Bottom Sheet Components
 
-A collection of modern and reusable **Bottom Sheet UI components** built with **Kotlin and Jetpack Compose**.
+A collection of modern and reusable **Bottom Sheet UI components** designed in **Canva** and implemented using **Kotlin and Jetpack Compose**.
 
-These components are designed for Android applications and can be customized and reused in different projects.
+Each component includes a custom Canva illustration/design along with reusable Jetpack Compose source code for Android applications.
 
 ---
 
@@ -11,6 +11,8 @@ These components are designed for Android applications and can be customized and
 ### 1. Action Bottom Sheet
 
 A modern action Bottom Sheet with quick actions such as Edit, Duplicate, Delete, and Cancel.
+
+The UI illustration was designed in **Canva** and recreated using Jetpack Compose.
 
 <p align="center">
   <img src="./image/action_bottomsheet.png" width="300">
@@ -23,7 +25,9 @@ A modern action Bottom Sheet with quick actions such as Edit, Duplicate, Delete,
 
 ### 2. Share Bottom Sheet
 
-A modern and reusable Bottom Sheet for sharing content through different social and sharing options.
+A modern and reusable Bottom Sheet for sharing content through different sharing options.
+
+The UI illustration was designed in **Canva** and implemented using Jetpack Compose.
 
 <p align="center">
   <img src="./image/share_bottomsheet.png" width="300">
@@ -38,6 +42,8 @@ A modern and reusable Bottom Sheet for sharing content through different social 
 
 A clean and modern Filter Bottom Sheet for selecting and applying different filtering options.
 
+The UI illustration was designed in **Canva** and implemented using Jetpack Compose.
+
 <p align="center">
   <img src="./image/filter_bottomsheet.png" width="300">
 </p>
@@ -51,6 +57,8 @@ A clean and modern Filter Bottom Sheet for selecting and applying different filt
 
 A modern Payment Bottom Sheet designed for displaying payment methods and payment-related actions.
 
+The UI illustration was designed in **Canva** and implemented using Jetpack Compose.
+
 <p align="center">
   <img src="./image/payment_bottomsheet.png" width="300">
 </p>
@@ -63,6 +71,8 @@ A modern Payment Bottom Sheet designed for displaying payment methods and paymen
 ### 5. Profile Bottom Sheet
 
 A modern Profile Bottom Sheet for displaying user profile information and profile-related actions.
+
+The UI illustration was designed in **Canva** and implemented using Jetpack Compose.
 
 <p align="center">
   <img src="./image/profile_bottomsheet.png" width="300">
@@ -78,20 +88,22 @@ A modern Profile Bottom Sheet for displaying user profile information and profil
 - **Kotlin**
 - **Jetpack Compose**
 - **Material 3**
-- **Android**
+- **Android Studio**
+- **Canva**
 
 ---
 
 ## Features
 
 - Modern Bottom Sheet designs
-- Reusable Compose components
+- Canva-designed illustrations
+- Reusable Jetpack Compose components
 - Clean and responsive UI
 - Material 3 design
 - Custom colors and shapes
 - Interactive actions
 - Easy customization
-- Beginner-friendly code
+- Beginner-friendly source code
 - Ready to use in Android projects
 
 ---
@@ -102,8 +114,8 @@ A modern Profile Bottom Sheet for displaying user profile information and profil
 2. Open the corresponding Kotlin source file.
 3. Copy the required Composable functions.
 4. Add the required imports and dependencies.
-5. Paste the code into your Jetpack Compose project.
-6. Add any required images or drawable resources.
+5. Copy the required Canva illustration from the `image` folder.
+6. Add the image to your Android project's `drawable` resources.
 7. Customize colors, text, icons, dimensions, and actions as needed.
 
 ---
@@ -127,7 +139,7 @@ A modern Profile Bottom Sheet for displaying user profile information and profil
 
 Step-by-step tutorials for these Jetpack Compose Bottom Sheet components are available on my YouTube channel.
 
-The tutorials demonstrate how to design the UI in **Canva** and implement the components from scratch using **Kotlin, Jetpack Compose, and Material 3**.
+The tutorials demonstrate how to create the **UI illustrations in Canva** and implement the components from scratch using **Kotlin, Jetpack Compose, and Material 3**.
 
 🎥 **[Watch the Complete Bottom Sheet Component Series]([YOUR_PLAYLIST_LINK](https://www.youtube.com/playlist?list=PLTfv16kn5Vg0))**
 
