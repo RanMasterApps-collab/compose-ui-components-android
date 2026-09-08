@@ -1,0 +1,150 @@
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import kotlinx.coroutines.delay
+
+
+@Composable
+fun PremiumLinearProgressDemo() {
+    var progress by remember { mutableFloatStateOf(0.68f) }
+
+    val animatedProgress by animateFloatAsState(
+        targetValue = progress,
+        animationSpec = ProgressIndicatorDefaults.ProgressAnimationSpec,
+        label = "progress"
+    )
+    var isUploading by remember { mutableStateOf(false) }
+
+    LaunchedEffect(isUploading) {
+
+        if (isUploading) {
+
+            progress = 0f
+
+            while (progress < 1f) {
+                delay(50)
+                progress = (progress + 0.01f).coerceAtMost(1f)
+            }
+
+            isUploading = false
+        }
+    }
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color(0xFFF7F8FC))
+            .padding(24.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+
+        Card(
+            modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(28.dp),
+            colors = CardDefaults.cardColors(
+                containerColor = Color.White
+            ),
+            elevation = CardDefaults.cardElevation(
+                defaultElevation = 6.dp
+            )
+        ) {
+
+            Column(
+                modifier = Modifier.padding(24.dp)
+            ) {
+
+                // Canva Illustration
+                Image(
+                    painter = painterResource(R.drawable.upload_illustration),
+                    contentDescription = "Upload illustration",
+                    modifier = Modifier
+                        .size(100.dp)
+                        .align(Alignment.CenterHorizontally)
+                )
+
+                Spacer(modifier = Modifier.height(18.dp))
+
+                Text(
+                    text = "Uploading File",
+                    fontSize = 21.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color(0xFF171A2B)
+                )
+
+                Spacer(modifier = Modifier.height(6.dp))
+
+                Text(
+                    text = "design_file.zip",
+                    fontSize = 14.sp,
+                    color = Color(0xFF8A8FA3)
+                )
+
+                Spacer(modifier = Modifier.height(20.dp))
+
+                LinearProgressIndicator(
+                    progress = { animatedProgress },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(10.dp)
+                        .clip(RoundedCornerShape(50)),
+                    color = Color(0xFF6C63FF),
+                    trackColor = Color(0xFFE9E8FF),
+                    strokeCap = StrokeCap.Round
+                )
+
+                Spacer(modifier = Modifier.height(10.dp))
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+
+                    Text(
+                        text = "Uploading...",
+                        fontSize = 13.sp,
+                        color = Color(0xFF777B8F)
+                    )
+
+                    Text(
+                        text = "${(animatedProgress * 100).toInt()}%",
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color(0xFF6C63FF)
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(20.dp))
+
+                Button(
+                    onClick = {
+                        isUploading = true
+                    },
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(16.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(0xFF6C63FF)
+                    )
+                ) {
+                    Text(
+                        text = if (isUploading)
+                            "Processing..."
+                        else
+                            "Complete Upload"
+                    )
+                }}
+        }
+    }
+}
