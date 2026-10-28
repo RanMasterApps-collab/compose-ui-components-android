@@ -1,0 +1,262 @@
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateColorAsState
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.keyframes
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FlashOn
+import androidx.compose.material.icons.filled.NotificationsActive
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.material3.darkColorScheme
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.draw.scale
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import kotlinx.coroutines.launch
+import kotlin.math.roundToInt
+
+private val AppBackground = Color(0xFF0B1020)
+private val CardBackground = Color(0xFF17213A)
+private val MutedText = Color(0xFF9AA8C2)
+private val Purple = Color(0xFF8757F5)
+private val Pink = Color(0xFFE84AAE)
+private val Cyan = Color(0xFF38D9F5)
+private val Green = Color(0xFF42DCA1)
+
+class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContent {
+            MaterialTheme(
+                colorScheme = darkColorScheme(
+                    primary = Purple, secondary = Pink, background = AppBackground,
+                    surface = CardBackground, onPrimary = Color.White,
+                    onBackground = Color.White, onSurface = Color.White
+                )
+            ) {
+                Surface(Modifier.fillMaxSize(), color = AppBackground) {
+                    InteractiveAnimationLab()
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun InteractiveAnimationLab() {
+    LazyColumn(
+        modifier = Modifier.fillMaxSize().background(
+            Brush.verticalGradient(listOf(Color(0xFF15112D), AppBackground, Color(0xFF101A31)))
+        ),
+        contentPadding = androidx.compose.foundation.layout.PaddingValues(
+            start = 18.dp, end = 18.dp, top = 28.dp, bottom = 32.dp
+        ),
+        verticalArrangement = Arrangement.spacedBy(18.dp)
+    ) {
+        item { HeaderSection() }
+        item { AnimationCard("01", "Button Click Animation", "Press feedback with spring bounce", Icons.Default.FlashOn, Purple) { ButtonClickDemo() } }
+        item { AnimationCard("02", "Pulse Animation", "Continuous breathing effect", Icons.Default.NotificationsActive, Pink) { PulseDemo() } }
+        item { AnimationCard("03", "Shake Animation", "Play a playful shake effect", Icons.Default.FlashOn, Cyan) { ShakeDemo() } }
+        item { AnimationCard("04", "Animated Color Change", "Transition between vibrant colors", Icons.Default.Favorite, Pink) { ColorChangeDemo() } }
+        item { AnimationCard("05", "Animated Icon", "Rotate and toggle the favorite state", Icons.Default.Star, Green) { AnimatedIconDemo() } }
+        item { FooterSection() }
+    }
+}
+
+@Composable
+private fun HeaderSection() {
+    Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Box(Modifier.size(48.dp).clip(RoundedCornerShape(15.dp)).background(Brush.linearGradient(listOf(Purple, Pink))), contentAlignment = Alignment.Center) {
+                Icon(Icons.Default.FlashOn, contentDescription = null, tint = Color.White, modifier = Modifier.size(28.dp))
+            }
+            Spacer(Modifier.width(12.dp))
+            Column {
+                Text("ANIMATION LAB", color = Cyan, fontSize = 13.sp, fontWeight = FontWeight.ExtraBold, letterSpacing = 2.sp)
+                Text("Interactive Playground", color = Color.White, fontSize = 22.sp, fontWeight = FontWeight.Bold)
+            }
+        }
+        Text("Make Your UI Come Alive.", color = Color.White, fontSize = 34.sp, lineHeight = 39.sp, fontWeight = FontWeight.ExtraBold)
+        Text("5 interactive animations built with Kotlin & Jetpack Compose.", color = MutedText, fontSize = 15.sp, lineHeight = 22.sp)
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            Tag("5 Animations"); Tag("Material 3"); Tag("Interactive")
+        }
+    }
+}
+
+@Composable
+private fun Tag(label: String) {
+    Box(Modifier.clip(CircleShape).background(Color.White.copy(alpha = 0.07f)).padding(horizontal = 12.dp, vertical = 8.dp)) {
+        Text(label, color = Color(0xFFD6DDF0), fontSize = 11.sp, fontWeight = FontWeight.SemiBold)
+    }
+}
+
+@Composable
+private fun AnimationCard(number: String, title: String, subtitle: String, icon: ImageVector, accent: Color, content: @Composable () -> Unit) {
+    Card(Modifier.fillMaxWidth(), shape = RoundedCornerShape(26.dp), colors = CardDefaults.cardColors(containerColor = CardBackground.copy(alpha = 0.96f)), elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)) {
+        Column(Modifier.padding(18.dp), verticalArrangement = Arrangement.spacedBy(18.dp)) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Box(Modifier.size(48.dp).clip(RoundedCornerShape(15.dp)).background(accent.copy(alpha = 0.18f)), contentAlignment = Alignment.Center) {
+                    Text(number, color = accent, fontSize = 18.sp, fontWeight = FontWeight.ExtraBold)
+                }
+                Spacer(Modifier.width(12.dp))
+                Column(Modifier.weight(1f)) {
+                    Text(title, color = Color.White, fontSize = 17.sp, fontWeight = FontWeight.Bold)
+                    Spacer(Modifier.height(4.dp))
+                    Text(subtitle, color = MutedText, fontSize = 12.sp)
+                }
+                Icon(icon, contentDescription = null, tint = accent, modifier = Modifier.size(22.dp))
+            }
+            content()
+        }
+    }
+}
+
+@Composable
+private fun GradientButton(text: String, modifier: Modifier = Modifier, onClick: () -> Unit) {
+    Box(modifier.clip(RoundedCornerShape(17.dp)).background(Brush.horizontalGradient(listOf(Purple, Pink))).clickable(onClick = onClick).padding(vertical = 15.dp, horizontal = 18.dp), contentAlignment = Alignment.Center) {
+        Text(text, color = Color.White, fontWeight = FontWeight.Bold, fontSize = 15.sp)
+    }
+}
+
+@Composable
+private fun ButtonClickDemo() {
+    var pressed by remember { mutableStateOf(false) }
+    val scale by animateFloatAsState(if (pressed) 0.91f else 1f, spring(dampingRatio = Spring.DampingRatioMediumBouncy), label = "buttonScale")
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        Box(Modifier.fillMaxWidth().padding(vertical = 6.dp), contentAlignment = Alignment.Center) {
+            Box(Modifier.scale(scale).clip(RoundedCornerShape(18.dp)).background(Brush.horizontalGradient(listOf(Purple, Pink))).clickable { pressed = !pressed }.padding(horizontal = 34.dp, vertical = 19.dp), contentAlignment = Alignment.Center) {
+                Text(if (pressed) "Nice! Tap Again ✨" else "Tap Me ✨", color = Color.White, fontSize = 17.sp, fontWeight = FontWeight.Bold)
+            }
+        }
+        Text("Tap the button to see spring feedback", color = MutedText, fontSize = 12.sp)
+    }
+}
+
+@Composable
+private fun PulseDemo() {
+    val transition = rememberInfiniteTransition(label = "pulseTransition")
+    val pulse by transition.animateFloat(0.88f, 1.12f, infiniteRepeatable(tween(850)), label = "pulseScale")
+    val glow by transition.animateFloat(0.35f, 0.95f, infiniteRepeatable(tween(850)), label = "pulseGlow")
+    Box(Modifier.fillMaxWidth().height(145.dp), contentAlignment = Alignment.Center) {
+        Box(Modifier.size(110.dp).scale(pulse).clip(CircleShape).background(Pink.copy(alpha = glow)), contentAlignment = Alignment.Center) {
+            Box(Modifier.size(78.dp).clip(CircleShape).background(Brush.linearGradient(listOf(Pink, Purple))), contentAlignment = Alignment.Center) {
+                Icon(Icons.Default.Favorite, contentDescription = "Pulsing heart", tint = Color.White, modifier = Modifier.size(36.dp))
+            }
+        }
+    }
+    Text("Infinite pulse is running", color = Pink, fontSize = 12.sp, fontWeight = FontWeight.SemiBold)
+}
+
+@Composable
+private fun ShakeDemo() {
+    val scope = rememberCoroutineScope()
+    val shake = remember { Animatable(0f) }
+    var shakeCount by remember { mutableStateOf(0) }
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        Box(Modifier.fillMaxWidth().height(115.dp), contentAlignment = Alignment.Center) {
+            Row(Modifier.offset { IntOffset(shake.value.roundToInt(), 0) }.clip(RoundedCornerShape(20.dp)).background(Color(0xFF263650)).padding(horizontal = 25.dp, vertical = 20.dp), verticalAlignment = Alignment.CenterVertically) {
+                Icon(Icons.Default.NotificationsActive, contentDescription = null, tint = Cyan, modifier = Modifier.size(25.dp))
+                Spacer(Modifier.width(10.dp))
+                Text("Shake this card", color = Color.White, fontWeight = FontWeight.Bold)
+            }
+        }
+        GradientButton(if (shakeCount == 0) "Play Shake Animation" else "Shake Again", Modifier.fillMaxWidth()) {
+            shakeCount++
+            scope.launch {
+                shake.snapTo(0f)
+                shake.animateTo(0f, keyframes {
+                    durationMillis = 500
+                    -18f at 60; 18f at 120; -14f at 180; 14f at 240; -8f at 300; 8f at 360; 0f at 500
+                })
+            }
+        }
+    }
+}
+
+@Composable
+private fun ColorChangeDemo() {
+    var active by remember { mutableStateOf(false) }
+    val start by animateColorAsState(if (active) Color(0xFF087E8B) else Color(0xFF4B35B8), tween(650), label = "animatedStart")
+    val end by animateColorAsState(if (active) Green else Pink, tween(650), label = "animatedEnd")
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        Box(Modifier.fillMaxWidth().height(125.dp).clip(RoundedCornerShape(22.dp)).background(Brush.linearGradient(listOf(start, end))), contentAlignment = Alignment.Center) {
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(if (active) "Fresh Mint" else "Royal Purple", color = Color.White, fontSize = 21.sp, fontWeight = FontWeight.ExtraBold)
+                Text("Animated color transition", color = Color.White.copy(alpha = 0.85f), fontSize = 12.sp)
+            }
+        }
+        Spacer(Modifier.height(14.dp))
+        GradientButton(if (active) "Change to Purple" else "Change Color", Modifier.fillMaxWidth()) { active = !active }
+    }
+}
+
+@Composable
+private fun AnimatedIconDemo() {
+    var selected by remember { mutableStateOf(false) }
+    val rotation by animateFloatAsState(if (selected) 360f else 0f, tween(650), label = "iconRotation")
+    val tint by animateColorAsState(if (selected) Pink else Color(0xFFB7C3DB), tween(350), label = "iconTint")
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        Box(Modifier.fillMaxWidth().height(125.dp), contentAlignment = Alignment.Center) {
+            Box(Modifier.size(92.dp).clip(RoundedCornerShape(26.dp)).background(Color(0xFF26324F)), contentAlignment = Alignment.Center) {
+                Icon(if (selected) Icons.Default.Favorite else Icons.Default.Star, contentDescription = "Animated icon", tint = tint, modifier = Modifier.size(48.dp).rotate(rotation))
+            }
+        }
+        GradientButton(if (selected) "Remove Favorite" else "Animate Icon", Modifier.fillMaxWidth()) { selected = !selected }
+    }
+}
+
+@Composable
+private fun FooterSection() {
+    Column(Modifier.fillMaxWidth().padding(top = 8.dp), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        Text("BUILT WITH JETPACK COMPOSE", color = Cyan, fontSize = 12.sp, fontWeight = FontWeight.ExtraBold, letterSpacing = 2.sp)
+        Text("Create • Animate • Inspire", color = MutedText, fontSize = 13.sp)
+    }
+}
